@@ -19,8 +19,10 @@ class ClientTest < Test::Unit::TestCase
   
   context "FGraph::Client#oauth_authorize_url" do
     should "call FGraph.oauth_authorize_url with :client_id option" do
-      FGraph.expects(:oauth_authorize_url).with(FACEBOOK_API_KEY, FACEBOOK_OAUTH_REDIRECT_URI)
-      fb_client.oauth_authorize_url(FACEBOOK_OAUTH_REDIRECT_URI)
+      FGraph.expects(:oauth_authorize_url).with(FACEBOOK_API_KEY, FACEBOOK_OAUTH_REDIRECT_URI, {
+        :scope => 'user_photos'
+      })
+      fb_client.oauth_authorize_url(FACEBOOK_OAUTH_REDIRECT_URI, :scope => 'user_photos')
     end
   end
   

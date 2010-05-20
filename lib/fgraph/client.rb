@@ -33,8 +33,8 @@ module FGraph
       @options = options
     end
     
-    def oauth_authorize_url(redirect_uri)
-      FGraph.oauth_authorize_url(self.options[:client_id], redirect_uri)
+    def oauth_authorize_url(redirect_uri, options={})
+      FGraph.oauth_authorize_url(self.options[:client_id], redirect_uri, options)
     end
     
     def oauth_access_token(redirect_uri, code)
