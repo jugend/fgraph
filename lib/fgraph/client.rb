@@ -18,6 +18,17 @@ module FGraph
     #   current user profile.
     # * <tt>app_access_token</tt> - Application access token, required to access Facebook insights.
     #   Auto generated if client_id and client_secret option are provided.
+    #
+    #   # Initialize with default options
+    #   fg_client = FGraph::Client.new(:client_id => '...', :client_secret => '...')
+    #   fg_client.oauth_authorize_url(:redirect_uri => 'http://www.example.com/oauth_redirect')
+    #   fg_client.oauth_access_token(:redirect_uri => '...', :code => '...')
+    #   
+    #   # Intialize with access token
+    #   fg_client = FGraph::Client.new(:access_token => '...')
+    #   fg_client.me
+    #   fg.client.publish_feed('herryanto', :message => 'Cool!')
+    #
     def initialize(options={})
       @options = options
     end

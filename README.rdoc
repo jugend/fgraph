@@ -104,6 +104,18 @@ OAuth Application Access Token, required to access application anlytics data:
   # https://graph.facebook.com/app_id/insights/application_api_call/day?access_token=...
   FGraph.insights('[app_id]', '[app_access_token]', :metric_path => 'application_api_call/day')
 
+=== FGraph::Client
+  
+  # Save the hassles the extra params, initialize with default options
+  fg_client = FGraph::Client.new(:client_id => '...', :client_secret => '...')
+  fg_client.oauth_authorize_url(:redirect_uri => 'http://www.example.com/oauth_redirect')
+  fg_client.oauth_access_token(:redirect_uri => '...', :code => '...')
+
+  # Intialize with access token
+  fg_client = FGraph::Client.new(:access_token => '...')
+  fg_client.me
+  fg.client.publish_feed('herryanto', :message => 'Cool!')
+  
 === Pagination Options
 
 * <tt>limit</tt> - max no of records
