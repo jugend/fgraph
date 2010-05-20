@@ -109,8 +109,8 @@ class ClientTest < Test::Unit::TestCase
     
     should "support remove_[category] method" do
       client = fb_client
-      fb_client.expects(:remove).with('12345/likes', {:limit => 5})
-      fb_client.remove_likes('12345', :limit => 5)
+      client.expects(:remove).with('12345/likes', {:limit => 5})
+      client.remove_likes('12345', :limit => 5)
     end
   end
   

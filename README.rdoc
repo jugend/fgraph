@@ -6,12 +6,17 @@
 
 Facebook Graph Ruby API implementation with Ruby magic (http://graph.facebook.com).
 
+== Installation
+
+  sudo gem install fgraph
+
 === Cheat Sheet
 
   sudo gem install cheat
   cheat fbgraph
 
 === Single object query
+
   # Users: https://graph.facebook.com/btaylor  (Bret Taylor)
   FGraph.object('btaylor')
 
@@ -33,6 +38,7 @@ Facebook Graph Ruby API implementation with Ruby magic (http://graph.facebook.co
   FGraph.me_friends(:access_token => '...')
 
 === Multiple objects query
+
   # Multiple users select: https://graph.facebook.com?ids=arjun,vernal
   FGraph.objects('arjun', 'vernel')
 
@@ -40,6 +46,7 @@ Facebook Graph Ruby API implementation with Ruby magic (http://graph.facebook.co
   FGraph.objects('arjun', 'vernel', :fields => 'id,name,picture')
 
 === OAuth
+
 OAuth authorization URL:
   # https://graph.facebook.com/oauth/authorize?
   #   client_id=...&
@@ -66,6 +73,7 @@ OAuth Application Access Token, required to access application anlytics data:
   FGraph.oauth_access_token('[client id]', '[client secret]', :type => 'client_cred')
 
 === Publish to Facebook Graph
+
   # Post to user's feed.
   #   curl -F 'access_token=...' \
   #     -F 'message=Hello, Arjun. I like this new API.' \
@@ -76,17 +84,20 @@ OAuth Application Access Token, required to access application anlytics data:
   FGraph.publish_feed('me', ':message => '...', :access_token => '...')
 
 === Remove from Facebook Graph
+
   # DELETE https://graph.facebook.com/ID?access_token=... HTTP/1.1
   FGraph.remove('[ID]')
   FGraph.remove('[ID]/likes')
   FGraph.remove_likes('[ID]')
 
 === Search
+
   # https://graph.facebook.com/search?q=watermelon&type=post
   FGraph.search('watermelon', :type => 'post')
   FGraph.search_post('watermelon')
 
 === Insights
+
   # https://graph.facebook.com/app_id/insights?access_token=...
   FGraph.insights('[app_id]', '[app_access_token]')
 
@@ -94,13 +105,10 @@ OAuth Application Access Token, required to access application anlytics data:
   FGraph.insights('[app_id]', '[app_access_token]', :metric_path => 'application_api_call/day')
 
 === Pagination Options
+
 * <tt>limit</tt> - max no of records
 * <tt>offset</tt> - offset
 * <tt>until</tt> - since (a unix timestamp or any date accepted by strtotime, e.g. yesterday)
-
-== Installation
-
-* sudo gem install fgraph
 
 == License
 

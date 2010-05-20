@@ -102,7 +102,7 @@ module FGraph
           # search_user(query)
           options = args[1] || {}
           options[:type] = names[0]
-          self.client(args[0], options)
+          self.search(args[0], options)
         else
           super
       end
