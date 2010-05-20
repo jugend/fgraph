@@ -1,0 +1,128 @@
+= fgraph
+
+* http://github.com/jugend/fgraph
+
+== Description
+
+Facebook Graph Ruby API implementation with Ruby magic (http://graph.facebook.com).
+
+=== Cheat Sheet
+
+  sudo gem install cheat
+  cheat fbgraph
+
+=== Single object query
+  # Users: https://graph.facebook.com/btaylor  (Bret Taylor)
+  FGraph.object('btaylor')
+
+  # Pages: https://graph.facebook.com/cocacola (Coca-Cola page)
+  FGraph.object('cocacola')
+
+  # Fields selection with metadata
+  FGraph.object('btaylor', :fields => 'id,name,picture', :metadata => 1)
+
+  # Page photos
+  FGraph.object('/cocacola/photos')
+  FGraph.object_photos('cocacola')
+
+  # Current user: https://graph.facebook.com/me?access_token=...
+  FGraph.me(:access_token => '...')
+
+  # Current user's friends: https://graph.facebook.com/me/friends?access_token=...
+  FGraph.me('friends', :access_token => '...')
+  FGraph.me_friends(:access_token => '...')
+
+=== Multiple objects query
+  # Multiple users select: https://graph.facebook.com?ids=arjun,vernal
+  FGraph.objects('arjun', 'vernel')
+
+  # Filter fields: https://graph.facebook.com?ids=arjun,vernal&fields=id,name,picture
+  FGraph.objects('arjun', 'vernel', :fields => 'id,name,picture')
+
+=== OAuth
+OAuth authorization URL:
+  # https://graph.facebook.com/oauth/authorize?
+  #   client_id=...&
+  #   redirect_uri=http://www.example.com/oauth_redirect&
+  #   scope=publish_stream
+  FGraph.oauth_authorize_url('[client id]', 'http://www.example.com/oauth_redirect', :scope => 
+    'publish_stream')
+
+OAuth Access Token:
+  # https://graph.facebook.com/oauth/access_token?
+  #   client_id=...&
+  #   client_secret=...&
+  #   redirect_uri=http://www.example.com/oauth_redirect&
+  #   code=...
+  FGraph.oauth_access_token('[client id]', '[client secret]', 
+     :redirect_uri => ''http://www.example.com/oauth_redirect', 
+     :code => '[authorization code]')
+
+OAuth Application Access Token, required to access application anlytics data:
+  # https://graph.facebook.com/oauth/access_token?
+  #   client_id=...&
+  #   client_secret=...&
+  #   type=client_cred
+  FGraph.oauth_access_token('[client id]', '[client secret]', :type => 'client_cred')
+
+=== Publish to Facebook Graph
+  # Post to user's feed.
+  #   curl -F 'access_token=...' \
+  #     -F 'message=Hello, Arjun. I like this new API.' \
+  #     https://graph.facebook.com/arjun/feed
+  FGraph.publish('arjun/feed', :message => 'Hello, Arjun. I like this n  ew API.', 
+    :access_token => '...')
+  FGraph.publish_feed('arjun', :message => '...', :access_token => '...  ')
+  FGraph.publish_feed('me', ':message => '...', :access_token => '...')
+
+=== Remove from Facebook Graph
+  # DELETE https://graph.facebook.com/ID?access_token=... HTTP/1.1
+  FGraph.remove('[ID]')
+  FGraph.remove('[ID]/likes')
+  FGraph.remove_likes('[ID]')
+
+=== Search
+  # https://graph.facebook.com/search?q=watermelon&type=post
+  FGraph.search('watermelon', :type => 'post')
+  FGraph.search_post('watermelon')
+
+=== Insights
+  # https://graph.facebook.com/app_id/insights?access_token=...
+  FGraph.insights('[app_id]', '[app_access_token]')
+
+  # https://graph.facebook.com/app_id/insights/application_api_call/day?access_token=...
+  FGraph.insights('[app_id]', '[app_access_token]', :metric_path => 'application_api_call/day')
+
+=== Pagination Options
+* <tt>limit</tt> - max no of records
+* <tt>offset</tt> - offset
+* <tt>until</tt> - since (a unix timestamp or any date accepted by strtotime, e.g. yesterday)
+
+== Installation
+
+* sudo gem install fgraph
+
+== License
+
+(The MIT License)
+
+Copyright (c) 2010 Herryanto Siatono http://www.pluitsolutions.com
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
