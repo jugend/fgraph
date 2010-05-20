@@ -10,7 +10,7 @@ Facebook Graph Ruby API implementation with Ruby magic (http://graph.facebook.co
 
   sudo gem install fgraph
 
-=== Cheat Sheet
+=== Facebook Graph Cheat Sheet
 
   sudo gem install cheat
   cheat fbgraph
