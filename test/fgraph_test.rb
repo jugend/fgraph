@@ -67,11 +67,11 @@ class FGraphTest < Test::Unit::TestCase
       FGraph.expects(:format_url).with('/oauth/authorize', {
         :client_id => FACEBOOK_API_KEY,
         :redirect_uri => FACEBOOK_OAUTH_REDIRECT_URI,
-        :scope => 'user_photos'
+        :scope => 'publish_stream'
       })
       
       FGraph.oauth_authorize_url(FACEBOOK_API_KEY, FACEBOOK_OAUTH_REDIRECT_URI,
-        :scope => 'user_photos')
+        :scope => 'publish_stream')
     end
   end
   

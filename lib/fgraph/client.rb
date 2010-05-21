@@ -21,8 +21,8 @@ module FGraph
     #
     #   # Initialize with default options
     #   fg_client = FGraph::Client.new(:client_id => '...', :client_secret => '...')
-    #   fg_client.oauth_authorize_url(:redirect_uri => 'http://www.example.com/oauth_redirect')
-    #   fg_client.oauth_access_token(:redirect_uri => '...', :code => '...')
+    #   fg_client.oauth_authorize_url('[redirect uri]', :scope => 'publish_stream')
+    #   fg_client.oauth_access_token('[redirect uri]', '[authorization code]')
     #   
     #   # Intialize with access token
     #   fg_client = FGraph::Client.new(:access_token => '...')

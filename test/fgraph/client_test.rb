@@ -20,9 +20,9 @@ class ClientTest < Test::Unit::TestCase
   context "FGraph::Client#oauth_authorize_url" do
     should "call FGraph.oauth_authorize_url with :client_id option" do
       FGraph.expects(:oauth_authorize_url).with(FACEBOOK_API_KEY, FACEBOOK_OAUTH_REDIRECT_URI, {
-        :scope => 'user_photos'
+        :scope => 'publish_stream'
       })
-      fb_client.oauth_authorize_url(FACEBOOK_OAUTH_REDIRECT_URI, :scope => 'user_photos')
+      fb_client.oauth_authorize_url(FACEBOOK_OAUTH_REDIRECT_URI, :scope => 'publish_stream')
     end
   end
   
@@ -40,10 +40,10 @@ class ClientTest < Test::Unit::TestCase
       object_id = '12345'
       FGraph.expects(:object).with(object_id, 
         :access_token => FACEBOOK_OAUTH_ACCESS_TOKEN,
-        :fields => 'user_photos'
+        :fields => 'publish_stream'
       )
         
-      fb_client.object(object_id, :fields => 'user_photos')
+      fb_client.object(object_id, :fields => 'publish_stream')
     end
     
     should "support #object_[category] method" do
@@ -57,10 +57,10 @@ class ClientTest < Test::Unit::TestCase
     should "call FGraph.objects with :access_token option" do
       FGraph.expects(:objects).with(['1', '2', {
         :access_token => FACEBOOK_OAUTH_ACCESS_TOKEN, 
-        :fields => 'user_photos'
+        :fields => 'publish_stream'
       }])
       
-      fb_client.objects('1', '2', :fields => 'user_photos')
+      fb_client.objects('1', '2', :fields => 'publish_stream')
     end
   end
   
@@ -68,10 +68,10 @@ class ClientTest < Test::Unit::TestCase
     should "call FGraph.me with :access_token option" do
       FGraph.expects(:me).with([{
         :access_token => FACEBOOK_OAUTH_ACCESS_TOKEN, 
-        :fields => 'user_photos'
+        :fields => 'publish_stream'
       }])
       
-      fb_client.me(:fields => 'user_photos')
+      fb_client.me(:fields => 'publish_stream')
     end
     
     should "support #me_[category] method" do
