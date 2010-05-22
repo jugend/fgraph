@@ -1,9 +1,8 @@
 require 'test_helper'
 
 class FGraphTest < Test::Unit::TestCase
-  FACEBOOK_API_KEY = '878116c4a4b79f25e4beb97ab096cc92'
-  FACEBOOK_APP_SECRET = '41f0e7ee8b6501dca1610de9926477c4'
   FACEBOOK_APP_ID = '112157085578818'
+  FACEBOOK_APP_SECRET = '41f0e7ee8b6501dca1610de9926477c4'
   FACEBOOK_OAUTH_REDIRECT_URI = 'http://www.example.com/oauth_redirect'
   FACEBOOK_OAUTH_CODE = '2.0eXhebBSDTpoe08qIaocNQ__.3600.1273748400-503153225|caqygNb5Gobz6lpj3HXjlthDxds.'
   FACEBOOK_OAUTH_ACCESS_TOKEN = "115187085478818|rDIv_5zgjCSM_fWBv5Z-lQr5gFk."
@@ -56,21 +55,21 @@ class FGraphTest < Test::Unit::TestCase
   context "FGraph.oauth_authorize_url" do
     should "should call format_url with appropriate hash" do
       FGraph.expects(:format_url).with('/oauth/authorize', {
-        :client_id => FACEBOOK_API_KEY,
+        :client_id => FACEBOOK_APP_ID,
         :redirect_uri => FACEBOOK_OAUTH_REDIRECT_URI
       })
       
-      FGraph.oauth_authorize_url(FACEBOOK_API_KEY, FACEBOOK_OAUTH_REDIRECT_URI)
+      FGraph.oauth_authorize_url(FACEBOOK_APP_ID, FACEBOOK_OAUTH_REDIRECT_URI)
     end
     
     should "should call format_url with options" do
       FGraph.expects(:format_url).with('/oauth/authorize', {
-        :client_id => FACEBOOK_API_KEY,
+        :client_id => FACEBOOK_APP_ID,
         :redirect_uri => FACEBOOK_OAUTH_REDIRECT_URI,
         :scope => 'publish_stream'
       })
       
-      FGraph.oauth_authorize_url(FACEBOOK_API_KEY, FACEBOOK_OAUTH_REDIRECT_URI,
+      FGraph.oauth_authorize_url(FACEBOOK_APP_ID, FACEBOOK_OAUTH_REDIRECT_URI,
         :scope => 'publish_stream')
     end
   end
@@ -78,13 +77,13 @@ class FGraphTest < Test::Unit::TestCase
   context "FGraph.oauth_access_token" do
     should "return user access token and expires" do
       stub_get(FGraph.format_url('/oauth/access_token', {
-        :client_id => FACEBOOK_API_KEY,
+        :client_id => FACEBOOK_APP_ID,
         :client_secret => FACEBOOK_APP_SECRET,
         :redirect_uri => FACEBOOK_OAUTH_REDIRECT_URI,
         :code => FACEBOOK_OAUTH_CODE
       }), 'access_token.txt')
       
-      token = FGraph.oauth_access_token(FACEBOOK_API_KEY, FACEBOOK_APP_SECRET, 
+      token = FGraph.oauth_access_token(FACEBOOK_APP_ID, FACEBOOK_APP_SECRET, 
         :redirect_uri => FACEBOOK_OAUTH_REDIRECT_URI, 
         :code => FACEBOOK_OAUTH_CODE)
       
@@ -141,7 +140,7 @@ class FGraphTest < Test::Unit::TestCase
   end
   
   context "Facebook.insights" do
-    should "call perform_get('/[app_id]/insights')" do
+    should "call perform_get('/[client_id]/insights')" do
       FGraph.expects(:perform_get).with("/#{FACEBOOK_APP_ID}/insights", {
         :access_token => FACEBOOK_OAUTH_APP_ACCESS_TOKEN
       })

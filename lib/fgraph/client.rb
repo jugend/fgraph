@@ -11,9 +11,8 @@ module FGraph
     # when calling respective Facebook Graph API methods.
     # 
     # ==== Options
-    # * <tt>client_id</tt> - Application API key
+    # * <tt>client_id</tt> - Application ID
     # * <tt>client_secret</tt> - Application Secret
-    # * <tt>app_id</tt> - Application ID
     # * <tt>access_token</tt> - Access token, required to publish to Facebook Graph or access
     #   current user profile.
     # * <tt>app_access_token</tt> - Application access token, required to access Facebook insights.
@@ -89,7 +88,7 @@ module FGraph
       unless self.options[:app_access_token]
         self.options[:app_access_token] = self.oauth_app_access_token
       end
-      FGraph.insights(self.options[:app_id], self.options[:app_access_token], options)
+      FGraph.insights(self.options[:client_id], self.options[:app_access_token], options)
     end
     
     def method_missing(name, *args, &block)

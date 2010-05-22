@@ -98,11 +98,11 @@ OAuth Application Access Token, required to access application anlytics data:
 
 === Insights
 
-  # https://graph.facebook.com/app_id/insights?access_token=...
-  FGraph.insights('[app_id]', '[app_access_token]')
+  # https://graph.facebook.com/client_id/insights?access_token=...
+  FGraph.insights('[client_id]', '[app_access_token]')
 
-  # https://graph.facebook.com/app_id/insights/application_api_call/day?access_token=...
-  FGraph.insights('[app_id]', '[app_access_token]', :metric_path => 'application_api_call/day')
+  # https://graph.facebook.com/client_id/insights/application_api_call/day?access_token=...
+  FGraph.insights('[client_id]', '[app_access_token]', :metric_path => 'application_api_call/day')
 
 === FGraph::Client
   

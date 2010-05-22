@@ -88,7 +88,7 @@ module FGraph
   # user's behalf. Returns Oauth Authorization URL, redirect to this URL to allow user to authorize your
   # application from Facebook.
   #
-  # <tt>client_id</tt> - Facebook API Key
+  # <tt>client_id</tt> - Application ID
   # <tt>redirect_uri</tt> - Needs to begin with your app's Connect URL. For instance, if your Connect URL 
   # is http://www.example.com then your redirect URI could be http://www.example.com/oauth_redirect.
   # <tt>scope (optional)</tt> -
@@ -217,20 +217,20 @@ module FGraph
   
   # Download insights data for your application.
   #
-  #   # https://graph.facebook.com/app_id/insights?access_token=...
-  #   FGraph.insights('[app_id]', '[app_access_token]')
+  #   # https://graph.facebook.com/[client_id]/insights?access_token=...
+  #   FGraph.insights('[client_id]', '[app_access_token]')
   #
-  #   # https://graph.facebook.com/app_id/insights/application_api_call/day?access_token=...
-  #   FGraph.insights('[app_id]', '[app_access_token]', :metric_path => 'application_api_call/day')
+  #   # https://graph.facebook.com/[client_id]/insights/application_api_call/day?access_token=...
+  #   FGraph.insights('[client_id]', '[app_access_token]', :metric_path => 'application_api_call/day')
   # 
   # ==== Options
   # * <tt>metric_path</tt> - e.g. application_api_calls/day
   # * <tt>since</tt> - since (a unix timestamp or any date accepted by strtotime, e.g. yesterday)
   # * <tt>until</tt> - until (a unix timestamp or any date accepted by strtotime, e.g. yesterday)
-  def self.insights(app_id, app_access_token, options={})
+  def self.insights(client_id, app_access_token, options={})
     metric_path = options.delete(:metric_path)
     
-    path = "/#{app_id}/insights"
+    path = "/#{client_id}/insights"
     path += "/#{metric_path}" if metric_path
       
     self.perform_get(path, {

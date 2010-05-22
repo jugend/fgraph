@@ -1,9 +1,8 @@
 require 'test_helper'
 
 class ClientTest < Test::Unit::TestCase
-  FACEBOOK_API_KEY = '878116c4a4b79f25e4beb97ab096cc92'
-  FACEBOOK_APP_SECRET = '41f0e7ee8b6501dca1610de9926477c4'
   FACEBOOK_APP_ID = '112157085578818'
+  FACEBOOK_APP_SECRET = '41f0e7ee8b6501dca1610de9926477c4'
   FACEBOOK_OAUTH_REDIRECT_URI = 'http://www.example.com/oauth_redirect'
   FACEBOOK_OAUTH_CODE = '2.0eXhebBSDTpoe08qIaocNQ__.3600.1273748400-503153225|caqygNb5Gobz6lpj3HXjlthDxds.'
   FACEBOOK_OAUTH_ACCESS_TOKEN = "115187085478818|rDIv_5zgjCSM_fWBv5Z-lQr5gFk."
@@ -11,7 +10,7 @@ class ClientTest < Test::Unit::TestCase
   
   def fb_client
     FGraph::Client.new(
-      :client_id => FACEBOOK_API_KEY,
+      :client_id => FACEBOOK_APP_ID,
       :client_secret => FACEBOOK_APP_SECRET,
       :access_token => FACEBOOK_OAUTH_ACCESS_TOKEN
     )
@@ -19,7 +18,7 @@ class ClientTest < Test::Unit::TestCase
   
   context "FGraph::Client#oauth_authorize_url" do
     should "call FGraph.oauth_authorize_url with :client_id option" do
-      FGraph.expects(:oauth_authorize_url).with(FACEBOOK_API_KEY, FACEBOOK_OAUTH_REDIRECT_URI, {
+      FGraph.expects(:oauth_authorize_url).with(FACEBOOK_APP_ID, FACEBOOK_OAUTH_REDIRECT_URI, {
         :scope => 'publish_stream'
       })
       fb_client.oauth_authorize_url(FACEBOOK_OAUTH_REDIRECT_URI, :scope => 'publish_stream')
@@ -28,7 +27,7 @@ class ClientTest < Test::Unit::TestCase
   
   context "FGraph::Client#oauth_access_token" do
     should "call FGraph.oauth_access_token with :client_id and :client_secret options" do
-      FGraph.expects(:oauth_access_token).with(FACEBOOK_API_KEY, FACEBOOK_APP_SECRET, 
+      FGraph.expects(:oauth_access_token).with(FACEBOOK_APP_ID, FACEBOOK_APP_SECRET, 
         :redirect_uri => FACEBOOK_OAUTH_REDIRECT_URI, :code => FACEBOOK_OAUTH_CODE)
         
       fb_client.oauth_access_token(FACEBOOK_OAUTH_REDIRECT_URI, FACEBOOK_OAUTH_CODE)
@@ -135,9 +134,8 @@ class ClientTest < Test::Unit::TestCase
   end
   
   context "FGraph::Client#insights" do
-    should "auto populate :app_id and :oauth_app_access_token" do
+    should "auto populate :client_id and :oauth_app_access_token" do
       client = fb_client 
-      client.options[:app_id] = FACEBOOK_APP_ID
       client.options[:app_access_token] = FACEBOOK_OAUTH_APP_ACCESS_TOKEN
       
       FGraph.expects(:insights).with(FACEBOOK_APP_ID, FACEBOOK_OAUTH_APP_ACCESS_TOKEN, {})
@@ -146,9 +144,8 @@ class ClientTest < Test::Unit::TestCase
     
     should "auto retrieve :oauth_app_access_token option" do
       client = fb_client
-      
       client.expects(:oauth_app_access_token).returns(FACEBOOK_OAUTH_APP_ACCESS_TOKEN)
-      FGraph.expects(:insights).with(nil, FACEBOOK_OAUTH_APP_ACCESS_TOKEN, {
+      FGraph.expects(:insights).with(FACEBOOK_APP_ID, FACEBOOK_OAUTH_APP_ACCESS_TOKEN, {
         :metric_path => 'application_api_calls/day'
       })
       client.insights(:metric_path => 'application_api_calls/day')
