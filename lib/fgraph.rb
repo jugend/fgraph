@@ -8,6 +8,14 @@ module FGraph
   base_uri 'https://graph.facebook.com'
   format :json
   
+  def self.config
+    @@config
+  end
+  
+  def self.config=(config)
+    @@config = config
+  end
+  
   # Facebook Error
   class FacebookError < StandardError
     attr_reader :data

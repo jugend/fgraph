@@ -50,21 +50,15 @@ module FGraph
     end
     
     def objects(*args)
-      return if args.blank?
       options = args.last.is_a?(Hash) ? args.pop : {}
-      options[:access_token] = self.options[:access_token]
-      args << options
-      
-      FGraph.objects(args)
+      args << {:access_token => self.options[:access_token]}.merge(options)
+      FGraph.objects(*args)
     end
     
     def me(*args)
-      return if args.blank?
       options = args.last.is_a?(Hash) ? args.pop : {}
-      options[:access_token] = self.options[:access_token]
-      args << options
-      
-      FGraph.me(args)
+      args << {:access_token => self.options[:access_token]}.merge(options)
+      FGraph.me(*args)
     end
     
     def publish(id, options={})

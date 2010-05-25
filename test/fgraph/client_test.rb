@@ -54,10 +54,10 @@ class ClientTest < Test::Unit::TestCase
 
   context "FGraph::Client#objects" do
     should "call FGraph.objects with :access_token option" do
-      FGraph.expects(:objects).with(['1', '2', {
+      FGraph.expects(:objects).with('1', '2', {
         :access_token => FACEBOOK_OAUTH_ACCESS_TOKEN, 
         :fields => 'publish_stream'
-      }])
+      })
       
       fb_client.objects('1', '2', :fields => 'publish_stream')
     end
@@ -65,10 +65,10 @@ class ClientTest < Test::Unit::TestCase
   
   context "FGraph::Client#me" do
     should "call FGraph.me with :access_token option" do
-      FGraph.expects(:me).with([{
+      FGraph.expects(:me).with({
         :access_token => FACEBOOK_OAUTH_ACCESS_TOKEN, 
         :fields => 'publish_stream'
-      }])
+      })
       
       fb_client.me(:fields => 'publish_stream')
     end
