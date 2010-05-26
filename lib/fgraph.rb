@@ -31,6 +31,56 @@ module FGraph
   class OAuthError < FacebookError; end
   class OAuthAccessTokenError < OAuthError; end
   
+  # Collection objects for Graph response with array data.
+  #
+  class Collection < Array 
+    attr_reader :next_url, :previous_url, :next_options, :previous_options
+    
+    # Initialize Facebook response object with 'data' array value.
+    def initialize(response)
+      return super unless response
+      
+      super(response['data'])
+      paging = response['paging'] || {}
+      self.next_url = paging['next']
+      self.previous_url = paging['previous']
+    end
+    
+    def next_url=(url)
+      @next_url = url
+      @next_options = self.url_options(url)
+    end
+    
+    def previous_url=(url)
+      @previous_url = url
+      @previous_options = self.url_options(url)
+    end
+    
+    def first?
+      @previous_url.blank? and not @next_url.blank?
+    end
+    
+    def next?
+      not @next_url.blank?
+    end
+    
+    def previous?
+      not @previous_url.blank?
+    end
+    
+    def url_options(url)
+      return unless url
+      
+      uri = URI.parse(url)
+      options = {}
+      uri.query.split('&').each do |param_set|
+         param_set = param_set.split('=')
+         options[param_set[0]] = CGI.unescape(param_set[1])
+      end
+      options
+    end
+  end
+  
   # Single object query.
   # 
   #   # Users: https://graph.facebook.com/btaylor  (Bret Taylor)
@@ -44,9 +94,13 @@ module FGraph
   #
   #   # Page photos
   #   FGraph.object('/cocacola/photos')
-  #   FGraph.object_photos('cocacola')
-  #
+  #   photos = FGraph.object_photos('cocacola')
+  #   
+  #   # Support id from object hash
+  #   friend = { 'name' => 'Mark Zuckerberg', 'id' => '4'}
+  #   friend_details = FGraph.object(friend)
   def self.object(id, options={})
+    id = self.get_id(id)
     perform_get("/#{id}", options)
   end
   
@@ -64,6 +118,14 @@ module FGraph
   #
   def self.objects(*args)
     options = args.last.is_a?(Hash) ? args.pop : {}
+    
+    # If first input before option is an array
+    if args.count == 1 and args.first.is_a?(Array)
+      args = args.first.map do |arg|
+        self.get_id(arg)
+      end
+    end
+    
     options = options.merge(:ids => args.join(','))
     perform_get("/", options)
   end
@@ -191,6 +253,7 @@ module FGraph
   #   /EVENT_ID/declined    decline the given event                 none
   # 
   def self.publish(id, options={})
+    id = self.get_id(id)
     self.perform_post("/#{id}", options)
   end
   
@@ -203,6 +266,7 @@ module FGraph
   #   FGraph.remove_likes('[ID]')
   #
   def self.remove(id, options={})
+    id = self.get_id(id)
     self.perform_delete("/#{id}", options)
   end
   
@@ -259,20 +323,22 @@ module FGraph
   end
   
   def self.handle_response(response)
-    # Check for error
-    return response unless response['error']
-    
-    case response['error']['type']
-      when 'QueryParseException'
-        raise QueryParseError, response['error']
-      when 'GraphMethodException'
-        raise GraphMethodError, response['error']
-      when 'OAuthException'
-        raise OAuthError, response['error']
-      when 'OAuthAccessTokenException'
-        raise OAuthAccessTokenError, response['error']
-      else
-        raise FacebookError, response['error']
+    unless response['error']
+      return FGraph::Collection.new(response) if response['data']
+      response
+    else
+      case response['error']['type']
+        when 'QueryParseException'
+          raise QueryParseError, response['error']
+        when 'GraphMethodException'
+          raise GraphMethodError, response['error']
+        when 'OAuthException'
+          raise OAuthError, response['error']
+        when 'OAuthAccessTokenException'
+          raise OAuthAccessTokenError, response['error']
+        else
+          raise FacebookError, response['error']
+      end
     end
   end
   
@@ -325,5 +391,13 @@ module FGraph
       else
         super
     end
+  end
+  
+  # Return ID['id'] if ID is a hash object
+  #
+  def self.get_id(id)
+    return unless id
+    id = id['id'] if id.is_a?(Hash)
+    id
   end
 end

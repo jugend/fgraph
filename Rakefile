@@ -9,7 +9,7 @@ begin
     gem.email = "herryanto@gmail.com"
     gem.homepage = "http://github.com/jugend/fgraph"
     gem.authors = ["Herryanto Siatono"]
-    gem.files = FileList["[A-Z]*", "{examples,lib,test}/**/*"]
+    gem.files = FileList["[A-Z]*", "{examples,lib,test,rails,tasks,templates}/**/*"]
     
     gem.add_dependency("httparty", "~> 0.5.0")
     # gem.add_dependency("hashie", "~> 0.2.0")

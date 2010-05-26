@@ -8,6 +8,20 @@ class FGraphTest < Test::Unit::TestCase
   FACEBOOK_OAUTH_ACCESS_TOKEN = "115187085478818|rDIv_5zgjCSM_fWBv5Z-lQr5gFk."
   FACEBOOK_OAUTH_APP_ACCESS_TOKEN = "112167085478818|rDIv_5zgjCSM_fWBv5Z-lQr5gFk."
   
+  context "FGraph.get_id" do
+    should "return 'id' if input 'id' is not a Hash" do
+      test_id = '123'
+      id = FGraph.get_id(test_id)
+      id.should == test_id
+    end
+    
+    should "return 'id' value from hash object if input 'id' is a Hash" do
+      test_id = { 'name' => 'Anthony', 'id' => '123' }
+      id = FGraph.get_id(test_id)
+      id.should == test_id['id']
+    end
+  end
+  
   context "FGraph.object" do
     should "return object hash" do
       stub_get('/cocacola', 'object_cocacola.json')
@@ -28,13 +42,29 @@ class FGraphTest < Test::Unit::TestCase
       FGraph.expects(:perform_get).with('/cocacola', options)
       FGraph.object('cocacola', options)
     end
+    
+    should "call FGraph.get_id" do
+      stub_get('/cocacola', 'object_cocacola.json')
+      FGraph.expects(:get_id).with('cocacola')
+      FGraph.expects(:perform_get)
+      object = FGraph.object('cocacola')
+    end
   end
   
   context "FGraph.objects" do
     should "call perform_get with ids and query options" do
       options = {:fields => 'id,name'}
-      FGraph.expects(:perform_get).with('/', options.merge(:ids => 'herry,john'))
-      FGraph.objects('herry', 'john', options)
+      FGraph.expects(:perform_get).with('/', options.merge(:ids => '1,2'))
+      FGraph.objects('1', '2', options)
+    end
+    
+    should "collect id values if input is an array of hash values" do
+      test_ids = [
+        { 'name' => 'Herry', 'id' => '1'},
+        { 'name' => 'John', 'id' => '2'}
+      ]
+      FGraph.expects(:perform_get).with('/', :ids => '1,2')
+      FGraph.objects(test_ids)
     end
   end
   
@@ -204,6 +234,28 @@ class FGraphTest < Test::Unit::TestCase
   end
   
   context "FGraph.handle_response" do
+    should "return response object if there's no error" do
+      fb_response = {'name' => 'test'}
+      response = FGraph.handle_response(fb_response)
+      response.should == fb_response
+    end
+    
+    should "convert to FGraph::Collection object if response contain 'data' value" do
+      fb_response = {
+        "data" => [
+          { "name" =>"Belle Clara", "id" => "100000133774483" },
+          { "name" =>"Rosemary Schapira", "id" => "100000237306697" }
+        ],
+        "paging" => {
+          "next" => "https://graph.facebook.com/756314021/friends?offset=4&limit=2&access_token=101507589896698"
+        }
+      }
+      
+      collection = FGraph.handle_response(fb_response)
+      collection.class.should == FGraph::Collection
+      collection.count.should == fb_response['data'].count
+    end
+    
     should "raise QueryParseError" do
       lambda do
         object = FGraph.handle_response(response_error('QueryParseException'))
@@ -226,6 +278,29 @@ class FGraphTest < Test::Unit::TestCase
       lambda do
         object = FGraph.handle_response(response_error('OAuthAccessTokenException'))
       end.should raise_error(FGraph::OAuthAccessTokenError)
+    end
+  end
+  
+  context "FGraph::Collection" do
+    should "should convert response object to Collection" do
+      response = {
+        "data" => [
+          {"name"=>"Belle Clara", "id"=>"100000133774483"},
+          {"name"=>"Rosemary Schapira", "id"=>"100000237306697"}
+        ],
+        "paging"=> {
+          "previous"=> "https://graph.facebook.com/756314021/friends?offset=0&limit=2&access_token=101507589896698",
+          "next"=> "https://graph.facebook.com/756314021/friends?offset=4&limit=2&access_token=101507589896698"
+        }
+      }
+      
+      collection = FGraph::Collection.new(response)
+      collection.count.should == response['data'].count
+      collection.first.should == response['data'].first
+      collection.next_url.should == response['paging']['next']
+      collection.previous_url.should == response['paging']['previous']
+      collection.previous_options.should == {'offset' => '0', 'limit' => '2', 'access_token' => '101507589896698'}
+      collection.next_options.should == {'offset' => '4', 'limit' => '2', 'access_token' => '101507589896698'}
     end
   end
   

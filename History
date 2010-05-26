@@ -1,3 +1,8 @@
+v0.2.0 - May 26, 2010
+  * Rails plugin support
+  * Add FGraph::Collection response object
+  * Allow Hash object as id input
+  
 v0.1.5 - May 25, 2010
   * Fix FGraph::Client not passing default :access_token options properly
   

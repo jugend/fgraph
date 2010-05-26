@@ -1,0 +1,1 @@
+load 'tasks/fgraph.rake'
