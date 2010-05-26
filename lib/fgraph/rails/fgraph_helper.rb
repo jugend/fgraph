@@ -7,7 +7,7 @@ module FGraph
   		  FGraph.config || {}
   		end
 
-		  # Return Facebook session, default to retrieve session from cookies
+		  # Return Facebook session, default to retrieve session from cookies.
   		def fgraph_session(app_id = fgraph_config['app_id'], 
   		  app_secret = fgraph_config['app_secret'])
   			
@@ -15,7 +15,7 @@ module FGraph
   			@fgraph_session = fgraph_session_cookies(app_id, app_secret)
   		end
 		
-		  # Return Facebook_session cookies
+		  # Return Facebook session cookies.
   		def fgraph_session_cookies(app_id = fgraph_config['app_id'], 
   			app_secret = fgraph_config['app_secret'])
 			
@@ -64,7 +64,7 @@ module FGraph
   		  @fgraph_current_user = fgraph_client.me 
   		end
   		
-  		# Return FGraph::Client.instance initialized with settings set in <tt>fgraph.yml</tt>.
+  		# Return FGraph::Client instance initialized with settings set in <tt>fgraph.yml</tt>.
   		# Initialized with <tt>:access_token</tt> as well if Facebook session exists.
   		def fgraph_client
   		  return @fgraph_client if @fgraph_client
