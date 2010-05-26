@@ -1,6 +1,5 @@
 require 'httparty'
 require 'cgi'
-require 'oauth2'
 require 'fgraph/client'
 
 module FGraph

@@ -1,5 +1,3 @@
-require 'oauth2'
-
 module FGraph
   
   # Facebook proxy class to call Facebook Graph API methods with default options.
