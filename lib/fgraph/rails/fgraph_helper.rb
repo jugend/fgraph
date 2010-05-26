@@ -1,10 +1,13 @@
 module FGraph
   module Rails
 	  module FGraphHelper
+	    
+	    # Access FGraph.config initialized with values set in <tt>[RAILS_ROOT]/config/fgraph.yml</tt>.
 	    def fgraph_config
   		  FGraph.config || {}
   		end
-		
+
+		  # Return Facebook session, default to retrieve session from cookies
   		def fgraph_session(app_id = fgraph_config['app_id'], 
   		  app_secret = fgraph_config['app_secret'])
   			
@@ -12,6 +15,7 @@ module FGraph
   			@fgraph_session = fgraph_session_cookies(app_id, app_secret)
   		end
 		
+		  # Return Facebook_session cookies
   		def fgraph_session_cookies(app_id = fgraph_config['app_id'], 
   			app_secret = fgraph_config['app_secret'])
 			
@@ -60,10 +64,11 @@ module FGraph
   		  @fgraph_current_user = fgraph_client.me 
   		end
   		
+  		# Return FGraph::Client.instance initialized with settings set in <tt>fgraph.yml</tt>.
+  		# Initialized with <tt>:access_token</tt> as well if Facebook session exists.
   		def fgraph_client
   		  return @fgraph_client if @fgraph_client
-  		  session = fgraph_session || {}
-			
+  		  
   		  @fgraph_client = FGraph::Client.new(
   			 :client_id => fgraph_config['app_id'],
   			 :client_secret => fgraph_config['app_secret'],
