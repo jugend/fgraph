@@ -186,7 +186,6 @@ Sample codes:
 
 For Asynchronous load, use <tt>window.afterFbAsyncInit</tt>:
 
-  <%= fgraph_javascript_init_tag :async => true %>
   <script type="text/javascript">
     window.afterFbAsyncInit = function() {
       FB.Event.subscribe('auth.sessionChange', function(response) {
@@ -198,6 +197,7 @@ For Asynchronous load, use <tt>window.afterFbAsyncInit</tt>:
       });
     }
   </script>
+  <%= fgraph_javascript_init_tag :async => true %>
   
 == License
 
