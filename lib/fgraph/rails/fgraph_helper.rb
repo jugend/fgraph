@@ -59,9 +59,15 @@ module FGraph
   		  return true if fgraph_session and fgraph_access_token
   		end
 		
+		  # Currently logged in facebook user
   		def fgraph_current_user
   		  return @fgraph_current_user if @fgraph_current_user
   		  @fgraph_current_user = fgraph_client.me 
+  		end
+  		
+  		# Alias for fgraph_current_user
+  		def fgraph_user
+  		  fgraph_current_user
   		end
   		
   		# Return FGraph::Client instance initialized with settings set in <tt>fgraph.yml</tt>.

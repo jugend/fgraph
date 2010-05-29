@@ -180,8 +180,8 @@ Sample codes:
   <fb:login-button autologoutlink="true" perms="email,publish_stream"></fb:login-button>
   
   <% if fgraph_logged_in? %>
-    <br>Hello <%= fgraph_current_user['name'] %>,
-    <br><%= fgraph_image_tag(fgraph_current_user, 'large') %>
+    <br>Hello <%= fgraph_user['name'] %>,
+    <br><%= fgraph_image_tag(fgraph_user, 'large') %>
   <% end %>
 
 For Asynchronous load, use <tt>window.afterFbAsyncInit</tt>:
