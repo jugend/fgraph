@@ -1,5 +1,6 @@
 v0.2.2 
   * Add fgraph_user, alias for fgraph_current_user
+  * Fix error when generating config file in rake task
   
 v0.2.1 - May 26, 2010
   * Update rdoc
