@@ -50,21 +50,6 @@ module FGraph
         end
       end
 
-      # Return Facebook object picture url: http://graph.facebook.com/[id]/picture
-      #
-      # ==== Type Options
-      # * <tt>square</tt> - 50x50 (default)
-      # * <tt>small</tt> - 50 pixels wide, variable height
-      # * <tt>normal</tt> - 100 pixels wide, variable height
-      # * <tt>large</tt> - 200 pixels wide, variable height
-      #
-      def fgraph_picture_url(id, type=nil)
-        id = FGraph.get_id(id)
-        url = "http://graph.facebook.com/#{id}/picture"
-        url += "?type=#{type}" if type
-        url
-      end
-      
       def fgraph_image_tag(id, type=nil, options={})
         default_options = fgraph_image_options(type)
         default_options[:alt] = id['name'] if id.is_a?(Hash)

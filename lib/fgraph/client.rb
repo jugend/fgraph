@@ -80,7 +80,7 @@ module FGraph
       unless self.options[:app_access_token]
         self.options[:app_access_token] = self.oauth_app_access_token
       end
-      FGraph.insights(self.options[:client_id], self.options[:app_access_token], options)
+      FGraph.insights(self.options[:client_id], self.options[:app_access_token]['access_token'], options)
     end
     
     def method_missing(name, *args, &block)

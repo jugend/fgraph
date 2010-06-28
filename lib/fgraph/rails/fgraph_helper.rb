@@ -81,6 +81,21 @@ module FGraph
   			 :access_token => fgraph_access_token
   		  )
   		end
+  		
+  		# Return Facebook object picture url: http://graph.facebook.com/[id]/picture
+      #
+      # ==== Type Options
+      # * <tt>square</tt> - 50x50 (default)
+      # * <tt>small</tt> - 50 pixels wide, variable height
+      # * <tt>normal</tt> - 100 pixels wide, variable height
+      # * <tt>large</tt> - 200 pixels wide, variable height
+      #
+      def fgraph_picture_url(id, type=nil)
+        id = FGraph.get_id(id)
+        url = "http://graph.facebook.com/#{id}/picture"
+        url += "?type=#{type}" if type
+        url
+      end
     end
   end
 end
