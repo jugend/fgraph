@@ -120,7 +120,7 @@ OAuth Application Access Token, required to access application anlytics data:
   FGraph.publish('arjun/feed', :message => 'Hello, Arjun. I like this n  ew API.', 
     :access_token => '...')
   FGraph.publish_feed('arjun', :message => '...', :access_token => '...  ')
-  FGraph.publish_feed('me', ':message => '...', :access_token => '...')
+  FGraph.publish_feed('me', :message => '...', :access_token => '...')
 
 === Remove from Facebook Graph
 
@@ -199,6 +199,17 @@ For Asynchronous load, use <tt>window.afterFbAsyncInit</tt>:
   </script>
   <%= fgraph_javascript_init_tag :async => true %>
   
+Facebook invalidates session token when you log out from <tt>facebook.com</tt>, 
+and <tt>fgraph_logged_in?</tt> does not check if the session is still valid 
+on Facebook server. The trick is you have to catch <tt>FGraph::OAuthError</tt> 
+in <tt>ApplicationController</tt>: 
+
+  rescue_from FGraph::OAuthError do
+    flash[:notice] = "Your Facebook session has expired, please login again."
+    reset_session
+    redirect_to index_url
+  end
+
 == License
 
 (The MIT License)

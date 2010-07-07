@@ -5,6 +5,22 @@ module FGraph
   class Client
     attr_reader :oauth_client, :client_id, :client_secret, :options
 
+    @@instance = nil
+    
+    # Return static instance of FGraph::Client with default options set in FGraph.config. 
+    #
+    def self.instance
+      return @@instance if @@instance
+      if FGraph.config
+        @@instance = FGraph::Client.new(
+  			 :client_id => FGraph.config['app_id'],
+  			 :client_secret => FGraph.config['app_secret']
+  		  )
+      else
+        @@instance = FGraph::Client.new
+      end
+    end
+    
     # Initialize Client with default options, so options are not required to be passed
     # when calling respective Facebook Graph API methods.
     # 

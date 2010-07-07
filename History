@@ -1,3 +1,7 @@
+v0.4.0
+  * Add FGraph::Client#instance
+  * Handle expired session error in fgraph_logged_in? gracefully
+
 v0.3.1
   * Fix FGraph::Client#insights not passing app_access_token value properly
   * Move fgraph_picture_url from fgraph_tag_helper to fgraph_helper
