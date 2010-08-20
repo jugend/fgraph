@@ -1,4 +1,8 @@
-v0.4.0
+v0.3.3
+  * Fix rake fgraph:setup not creating fgraph.yml config on gem install 
+  * Update Rdoc
+
+v0.3.2
   * Add FGraph::Client#instance
   * Handle expired session error in fgraph_logged_in? gracefully
 
