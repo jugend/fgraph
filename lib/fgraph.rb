@@ -391,7 +391,7 @@ module FGraph
     #
     def get_id(id)
       return unless id
-      id = id['id'] if id.is_a?(Hash)
+      id = id['id'] || id[:id] if id.is_a?(Hash)
       id
     end
   end
