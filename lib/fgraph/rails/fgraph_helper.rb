@@ -29,7 +29,7 @@ module FGraph
   			end
 
   			# Parse facebook cookies
-  			fbs_cookies = CGI.parse(fbs_cookies.gsub!(/(^\"|\"$)/, ''))
+  			fbs_cookies = CGI.parse(fbs_cookies.gsub(/(^\"|\"$)/, ''))
   			session_cookies = {}
   			fbs_cookies.each do |key, value|
   				session_cookies[key] = value[0]
