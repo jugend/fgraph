@@ -1,3 +1,6 @@
+v0.3.4
+  * Add FGraph::Client#update_options method
+  
 v0.3.3
   * Fix rake fgraph:setup not creating fgraph.yml config on gem install 
   * Update Rdoc

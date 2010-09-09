@@ -46,6 +46,10 @@ module FGraph
       @options = options
     end
     
+    def update_options(options={})
+      @options.merge!(options)
+    end
+    
     def oauth_authorize_url(redirect_uri, options={})
       FGraph.oauth_authorize_url(self.options[:client_id], redirect_uri, options)
     end
