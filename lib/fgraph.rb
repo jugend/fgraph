@@ -114,7 +114,7 @@ module FGraph
       options = args.last.is_a?(Hash) ? args.pop : {}
     
       # If first input before option is an array
-      if args.count == 1 and args.first.is_a?(Array)
+      if args.length == 1 and args.first.is_a?(Array)
         args = args.first.map do |arg|
           self.get_id(arg)
         end

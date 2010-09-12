@@ -136,7 +136,7 @@ class ClientTest < Test::Unit::TestCase
   context "FGraph::Client#insights" do
     should "auto populate :client_id and :oauth_app_access_token" do
       client = fb_client 
-      client.options[:app_access_token] = FACEBOOK_OAUTH_APP_ACCESS_TOKEN
+      client.options[:app_access_token] = { 'access_token' => FACEBOOK_OAUTH_APP_ACCESS_TOKEN }
       
       FGraph.expects(:insights).with(FACEBOOK_APP_ID, FACEBOOK_OAUTH_APP_ACCESS_TOKEN, {})
       client.insights
@@ -144,7 +144,7 @@ class ClientTest < Test::Unit::TestCase
     
     should "auto retrieve :oauth_app_access_token option" do
       client = fb_client
-      client.expects(:oauth_app_access_token).returns(FACEBOOK_OAUTH_APP_ACCESS_TOKEN)
+      client.expects(:oauth_app_access_token).returns({ 'access_token' => FACEBOOK_OAUTH_APP_ACCESS_TOKEN })
       FGraph.expects(:insights).with(FACEBOOK_APP_ID, FACEBOOK_OAUTH_APP_ACCESS_TOKEN, {
         :metric_path => 'application_api_calls/day'
       })

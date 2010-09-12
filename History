@@ -1,3 +1,9 @@
+v0.3.5
+  * Replace fbs_cookies.gsub! with .gsub
+  * FGraph.get_id now supports :id 
+  * Replace array.count with array.length
+  * Fix client_test failures
+  
 v0.3.4
   * Add FGraph::Client#update_options method
   

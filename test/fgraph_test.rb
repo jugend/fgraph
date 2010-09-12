@@ -253,7 +253,7 @@ class FGraphTest < Test::Unit::TestCase
       
       collection = FGraph.handle_response(fb_response)
       collection.class.should == FGraph::Collection
-      collection.count.should == fb_response['data'].count
+      collection.length.should == fb_response['data'].length
     end
     
     should "raise QueryParseError" do
@@ -295,7 +295,7 @@ class FGraphTest < Test::Unit::TestCase
       }
       
       collection = FGraph::Collection.new(response)
-      collection.count.should == response['data'].count
+      collection.length.should == response['data'].length
       collection.first.should == response['data'].first
       collection.next_url.should == response['paging']['next']
       collection.previous_url.should == response['paging']['previous']
