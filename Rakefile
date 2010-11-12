@@ -11,7 +11,7 @@ begin
     gem.authors = ["Herryanto Siatono"]
     gem.files = FileList["[A-Z]*", "{examples,lib,test,rails,tasks,templates}/**/*"]
     
-    gem.add_dependency("httparty", "~> 0.5.0")
+    gem.add_dependency("httparty", ">= 0.5.0")
     
     gem.add_development_dependency("shoulda", "~> 2.10.0")
     gem.add_development_dependency("jnunemaker-matchy", "~> 0.4.0")
