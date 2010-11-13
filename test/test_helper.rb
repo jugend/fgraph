@@ -1,6 +1,5 @@
 require 'test/unit'
 require 'shoulda'
-require 'matchy'
 require 'mocha'
 require 'fakeweb'
 require 'pp'

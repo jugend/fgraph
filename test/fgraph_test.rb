@@ -12,13 +12,13 @@ class FGraphTest < Test::Unit::TestCase
     should "return 'id' if input 'id' is not a Hash" do
       test_id = '123'
       id = FGraph.get_id(test_id)
-      id.should == test_id
+      assert_equal test_id, id
     end
     
     should "return 'id' value from hash object if input 'id' is a Hash" do
       test_id = { 'name' => 'Anthony', 'id' => '123' }
       id = FGraph.get_id(test_id)
-      id.should == test_id['id']
+      assert_equal test_id['id'], id
     end
   end
   
@@ -27,8 +27,8 @@ class FGraphTest < Test::Unit::TestCase
       stub_get('/cocacola', 'object_cocacola.json')
       object = FGraph.object('cocacola')
       
-      object.should_not be_nil
-      object['name'].should == 'Coca-Cola'
+      assert !object.nil?
+      assert_equal 'Coca-Cola', object['name']
     end
     
     should "call handle_response" do
@@ -117,8 +117,8 @@ class FGraphTest < Test::Unit::TestCase
         :redirect_uri => FACEBOOK_OAUTH_REDIRECT_URI, 
         :code => FACEBOOK_OAUTH_CODE)
       
-      token['access_token'].should == 'thisisanaccesstoken'
-      token['expires'].should == '4000'
+      assert_equal 'thisisanaccesstoken', token['access_token']
+      assert_equal '4000', token['expires']
     end
   end
   
@@ -203,33 +203,33 @@ class FGraphTest < Test::Unit::TestCase
     end
     
     should "raise no method error if missing method name does not start with object_ or me_" do
-      lambda do
+      assert_raise NoMethodError do 
         FGraph.xyz_photos
-      end.should raise_error(NoMethodError)
+      end
     end
   end
   
   context "FGraph.format_url" do
     should "return URL without query string" do
       formatted_url = FGraph.format_url('/test')
-      formatted_url.should == "https://graph.facebook.com/test"
+      assert_equal "https://graph.facebook.com/test", formatted_url
     end
     
     should "return URL with query string with escaped value" do
       formatted_url = FGraph.format_url('/test',  {:username => 'john lim'})
-      formatted_url.should == "https://graph.facebook.com/test?username=john+lim"
+      assert_equal "https://graph.facebook.com/test?username=john+lim", formatted_url
     end
 
     should "return URL with multiple options" do
       formatted_url = FGraph.format_url('/test', {:username => 'john', :age => 20})
-      formatted_url.should =~ /username=john/
-      formatted_url.should =~ /age=20/
-      formatted_url.should =~ /&/
+      assert formatted_url =~ /username=john/
+      assert formatted_url =~ /age=20/
+      assert formatted_url =~ /&/
     end
 
     should "return URL without empty options" do
       formatted_url = FGraph.format_url('/test', {:username => 'john', :age => nil})
-      formatted_url.should == "https://graph.facebook.com/test?username=john"
+      assert_equal "https://graph.facebook.com/test?username=john", formatted_url
     end
   end
   
@@ -237,7 +237,7 @@ class FGraphTest < Test::Unit::TestCase
     should "return response object if there's no error" do
       fb_response = {'name' => 'test'}
       response = FGraph.handle_response(fb_response)
-      response.should == fb_response
+      assert_equal fb_response, response
     end
     
     should "convert to FGraph::Collection object if response contain 'data' value" do
@@ -252,32 +252,32 @@ class FGraphTest < Test::Unit::TestCase
       }
       
       collection = FGraph.handle_response(fb_response)
-      collection.class.should == FGraph::Collection
-      collection.length.should == fb_response['data'].length
+      assert_equal FGraph::Collection, collection.class
+      assert_equal fb_response['data'].length, collection.length
     end
     
     should "raise QueryParseError" do
-      lambda do
+      assert_raise FGraph::QueryParseError do
         object = FGraph.handle_response(response_error('QueryParseException'))
-      end.should raise_error(FGraph::QueryParseError)
+      end
     end
     
     should "raise GraphMethodError" do
-      lambda do
+      assert_raise FGraph::GraphMethodError do
         object = FGraph.handle_response(response_error('GraphMethodException'))
-      end.should raise_error(FGraph::GraphMethodError)
+      end
     end
     
     should "raise OAuthError" do
-      lambda do
+      assert_raise FGraph::OAuthError do
         object = FGraph.handle_response(response_error('OAuthException'))
-      end.should raise_error(FGraph::OAuthError)
+      end
     end
     
     should "raise OAuthAccessTokenError" do
-      lambda do
+      assert_raise FGraph::OAuthAccessTokenError do 
         object = FGraph.handle_response(response_error('OAuthAccessTokenException'))
-      end.should raise_error(FGraph::OAuthAccessTokenError)
+      end
     end
   end
   
@@ -295,12 +295,12 @@ class FGraphTest < Test::Unit::TestCase
       }
       
       collection = FGraph::Collection.new(response)
-      collection.length.should == response['data'].length
-      collection.first.should == response['data'].first
-      collection.next_url.should == response['paging']['next']
-      collection.previous_url.should == response['paging']['previous']
-      collection.previous_options.should == {'offset' => '0', 'limit' => '2', 'access_token' => '101507589896698'}
-      collection.next_options.should == {'offset' => '4', 'limit' => '2', 'access_token' => '101507589896698'}
+      assert_equal response['data'].length, collection.length
+      assert_equal response['data'].first, collection.first
+      assert_equal response['paging']['next'], collection.next_url
+      assert_equal response['paging']['previous'], collection.previous_url
+      assert_equal({'offset' => '0', 'limit' => '2', 'access_token' => '101507589896698'}, collection.previous_options)
+      assert_equal({'offset' => '4', 'limit' => '2', 'access_token' => '101507589896698'}, collection.next_options)
     end
   end
   
