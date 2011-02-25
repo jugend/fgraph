@@ -11,22 +11,31 @@ module FGraph
       # * <tt>app_id</tt> - overrride Fgraph.config['app_id'] value.
       # * <tt>async</tt> - asynchronous javascript include & initialization.
       #   for other Facebook JS initialization codes please wrap under:
-      #
+      # * <tt>status</tt> - default: false, will check login status, and auto-login user if they are connected
+      # * <tt>cookie</tt> - default: true, auto set cookies
+      # * <tt>xfbml</tt> - default: true, auto parse xfbml tags
+      # 
+      # If async is set to true, the callback function is window.afterFbAsyncInit, e.g.
       #   window.afterFbAsyncInit = function() {
       #       ....
       #   }
       #
       def fgraph_javascript_init_tag(options={})
-        options = { :app_id => FGraph.config['app_id'] }.merge(options || {})
+        options = { :app_id => FGraph.config['app_id'], 
+          :status => true,
+          :cookie => true,
+          :xfbml => true
+        }.merge(options || {})
+        
+        fb_init = "FB.init({appId: '#{options[:app_id]}', status: #{options[:status]}, cookie: #{options[:cookie]}, xfbml: #{options[:xfbml]}});"
         
         if options[:async]
           %{
             <div id="fb-root"></div>
             <script>
               window.fbAsyncInit = function() {
-                FB.init({appId: '#{options[:app_id]}', status: true, cookie: true,
-                         xfbml: true});
-                         
+                #{fb_init}
+                
                 if (window.afterFbAsyncInit) {
                   window.afterFbAsyncInit();
                 }
@@ -44,7 +53,7 @@ module FGraph
           tag << %{
             <div id="fb-root"></div>
             <script>
-              FB.init({appId: '#{options[:app_id]}', status: true, cookie: true, xfbml: true});
+              #{fb_init}
             </script>
           }
         end

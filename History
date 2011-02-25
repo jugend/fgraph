@@ -1,3 +1,6 @@
+v0.6.0
+  * Add status, cookie, and xfbml options to fgraph_javascript_init_tag
+
 v0.5.0
   * Update httparty dependency
   
