@@ -289,8 +289,8 @@ class FGraphTest < Test::Unit::TestCase
           {"name"=>"Rosemary Schapira", "id"=>"100000237306697"}
         ],
         "paging"=> {
-          "previous"=> "https://graph.facebook.com/756314021/friends?offset=0&limit=2&access_token=101507589896698",
-          "next"=> "https://graph.facebook.com/756314021/friends?offset=4&limit=2&access_token=101507589896698"
+          "previous"=> "https://graph.facebook.com/756314021/friends?offset=0&limit=2&access_token=101507589896698|1234",
+          "next"=> "https://graph.facebook.com/756314021/friends?offset=4&limit=2&access_token=101507589896698|1234"
         }
       }
       
@@ -299,8 +299,8 @@ class FGraphTest < Test::Unit::TestCase
       assert_equal response['data'].first, collection.first
       assert_equal response['paging']['next'], collection.next_url
       assert_equal response['paging']['previous'], collection.previous_url
-      assert_equal({'offset' => '0', 'limit' => '2', 'access_token' => '101507589896698'}, collection.previous_options)
-      assert_equal({'offset' => '4', 'limit' => '2', 'access_token' => '101507589896698'}, collection.next_options)
+      assert_equal({'offset' => '0', 'limit' => '2', 'access_token' => '101507589896698|1234'}, collection.previous_options)
+      assert_equal({'offset' => '4', 'limit' => '2', 'access_token' => '101507589896698|1234'}, collection.next_options)
     end
   end
   

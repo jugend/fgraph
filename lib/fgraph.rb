@@ -62,7 +62,9 @@ module FGraph
     def url_options(url)
       return unless url
       
-      uri = URI.parse(url)
+      # Note: FB pass access token with '|' character, which cause URI::InvalidURIError
+      uri = URI.parse(url.gsub('|', '%7C'))
+      
       options = {}
       uri.query.split('&').each do |param_set|
          param_set = param_set.split('=')
