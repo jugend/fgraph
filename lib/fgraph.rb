@@ -208,13 +208,21 @@ module FGraph
         :client_id => client_id,
         :client_secret => client_secret
       }.merge(options || {}))
-    
+   
+      # facebook will responde with an url query formated string json
+      # so ensure to avoid :xml or :json parse mode
+      global_format = format
+      format :html
+      
       response = self.perform_get(url)
       response_hash = {}
       response.split('&').each do |value|
         value_pair = value.split('=')
         response_hash[value_pair[0]] = value_pair[1]
       end
+
+      # restore global parser setting
+      format global_format
       response_hash
     end
   
