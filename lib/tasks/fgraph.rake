@@ -3,8 +3,8 @@ require 'fileutils'
 namespace :fgraph do
   desc "Create fgraph.yml configuration file in Rails config folder"
   task :setup => :environment do
-    fgraph_config = File.join(RAILS_ROOT, "config", "fgraph.yml")
-    fgraph_template_dir = File.join(RAILS_ROOT, "vendor", "plugins", "fgraph", "templates")
+    fgraph_config = File.join(Rails.root, "config", "fgraph.yml")
+    fgraph_template_dir = File.join(Rails.root, "vendor", "plugins", "fgraph", "templates")
     
     unless File.exists?(fgraph_template_dir)
       fgraph_data_dir = Gem.datadir('fgraph')
