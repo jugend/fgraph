@@ -1,3 +1,9 @@
+v0.6.2
+  * Change RAILS_ROOT to Rails.root to avoid deprecated message in Rails 3
+
+v0.6.1
+  * Fix URI::InvalidURIError when retrieving FGraph::Collection#url_options
+  
 v0.6.0
   * Add status, cookie, and xfbml options to fgraph_javascript_init_tag
 
