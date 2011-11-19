@@ -4,14 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{fgraph}
-  s.version = "0.6.1"
+  s.name = "fgraph"
+  s.version = "0.6.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Herryanto Siatono"]
-  s.date = %q{2011-05-06}
-  s.description = %q{Ruby Facebook Graph API}
-  s.email = %q{herryanto@gmail.com}
+  s.date = "2011-11-19"
+  s.description = "Ruby Facebook Graph API"
+  s.email = "herryanto@gmail.com"
   s.extra_rdoc_files = [
     "README.rdoc"
   ]
@@ -37,10 +37,10 @@ Gem::Specification.new do |s|
     "test/fixtures/object_cocacola.json",
     "test/test_helper.rb"
   ]
-  s.homepage = %q{http://github.com/jugend/fgraph}
+  s.homepage = "http://github.com/jugend/fgraph"
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.7}
-  s.summary = %q{Ruby Facebook Graph API}
+  s.rubygems_version = "1.8.11"
+  s.summary = "Ruby Facebook Graph API"
   s.test_files = [
     "examples/get_access_token.rb",
     "examples/publish_feed.rb",
@@ -50,7 +50,6 @@ Gem::Specification.new do |s|
   ]
 
   if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
