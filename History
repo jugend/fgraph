@@ -1,3 +1,7 @@
+v0.7.0
+  * Set FGraph.oauth_access_token to pass empty redirect_uri param by default
+  * Update FGraph Rails helper to support FB OAuth 2.0
+  
 v0.6.2
   * Change RAILS_ROOT to Rails.root to avoid deprecated message in Rails 3
 

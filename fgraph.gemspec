@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "fgraph"
-  s.version = "0.6.2"
+  s.version = "0.7.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Herryanto Siatono"]
-  s.date = "2011-11-19"
+  s.date = "2011-12-27"
   s.description = "Ruby Facebook Graph API"
   s.email = "herryanto@gmail.com"
   s.extra_rdoc_files = [

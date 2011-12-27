@@ -40,12 +40,13 @@ module FGraph
                   window.afterFbAsyncInit();
                 }
               };
-              (function() {
-                var e = document.createElement('script'); e.async = true;
-                e.src = document.location.protocol +
-                  '//connect.facebook.net/en_US/all.js';
-                document.getElementById('fb-root').appendChild(e);
-              }());
+              
+              (function(d) {
+                var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+                js = d.createElement('script'); js.id = id; js.async = true;
+                js.src = "//connect.facebook.net/en_US/all.js";
+                d.getElementsByTagName('head')[0].appendChild(js);
+              }(document));
             </script>
           }
         else

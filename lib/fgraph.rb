@@ -191,7 +191,7 @@ module FGraph
     #   #   redirect_uri=http://www.example.com/oauth_redirect&
     #   #   code=...
     #   FGraph.oauth_access_token('[client id]', '[client secret]', 
-    #      :redirect_uri => ''http://www.example.com/oauth_redirect', 
+    #      :redirect_uri => 'http://www.example.com/oauth_redirect', 
     #      :code => '[authorization code]')
     #
     # Application access token requires <tt>:type => 'client_cred'</td> option. Used to access application
@@ -206,7 +206,8 @@ module FGraph
     def oauth_access_token(client_id, client_secret, options={})
       url = self.format_url('/oauth/access_token', {
         :client_id => client_id,
-        :client_secret => client_secret
+        :client_secret => client_secret,
+        :redirect_uri => ''
       }.merge(options || {}))
     
       response = self.perform_get(url)
@@ -353,7 +354,7 @@ module FGraph
         options = stringified_options
       
         options.each do |option|
-          next if option[1].blank?
+          next unless option[0]
           url << "&" if option_count > 0
           url << "#{option[0]}=#{CGI.escape(option[1].to_s)}"
           option_count += 1

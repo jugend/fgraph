@@ -229,7 +229,7 @@ class FGraphTest < Test::Unit::TestCase
 
     should "return URL without empty options" do
       formatted_url = FGraph.format_url('/test', {:username => 'john', :age => nil})
-      assert_equal "https://graph.facebook.com/test?username=john", formatted_url
+      assert_equal "https://graph.facebook.com/test?username=john&age=", formatted_url
     end
   end
   
