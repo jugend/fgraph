@@ -177,7 +177,7 @@ Sample codes:
   </script>
   
   <!-- Facebook Login Button -->
-  <fb:login-button autologoutlink="true" perms="email,publish_stream"></fb:login-button>
+  <fb:login-button autologoutlink="true" scope="email,publish_stream"></fb:login-button>
   
   <% if fgraph_logged_in? %>
     <br>Hello <%= fgraph_user['name'] %>,
