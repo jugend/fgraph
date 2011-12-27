@@ -4,14 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = "fgraph"
+  s.name = %q{fgraph}
   s.version = "0.7.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Herryanto Siatono"]
-  s.date = "2011-12-27"
-  s.description = "Ruby Facebook Graph API"
-  s.email = "herryanto@gmail.com"
+  s.date = %q{2011-12-27}
+  s.description = %q{Ruby Facebook Graph API}
+  s.email = %q{herryanto@gmail.com}
   s.extra_rdoc_files = [
     "README.rdoc"
   ]
@@ -37,10 +37,10 @@ Gem::Specification.new do |s|
     "test/fixtures/object_cocacola.json",
     "test/test_helper.rb"
   ]
-  s.homepage = "http://github.com/jugend/fgraph"
+  s.homepage = %q{http://github.com/jugend/fgraph}
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.11"
-  s.summary = "Ruby Facebook Graph API"
+  s.rubygems_version = %q{1.4.2}
+  s.summary = %q{Ruby Facebook Graph API}
   s.test_files = [
     "examples/get_access_token.rb",
     "examples/publish_feed.rb",
