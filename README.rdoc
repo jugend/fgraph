@@ -216,7 +216,7 @@ in <tt>ApplicationController</tt>:
 
 (The MIT License)
 
-Copyright (c) 2010 Herryanto Siatono http://www.pluitsolutions.com
+Copyright (c) 2010 Herryanto Siatono
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
